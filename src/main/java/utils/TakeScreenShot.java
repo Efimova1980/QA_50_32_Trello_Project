@@ -18,6 +18,10 @@ public class TakeScreenShot {
         String fileName = createFileName();
         File scrFile = screenShot.getScreenshotAs(OutputType.FILE);
         try {
+            File dir = new File("build/screenshots");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
             Files.copy(scrFile.toPath(), new File(fileName).toPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -30,7 +34,8 @@ public class TakeScreenShot {
         System.out.println(date);
         String currentDate = formater.format(date);
         System.out.println(currentDate);
-        String fileName = "src/test/test_logs/screenshots/scr-" + currentDate + ".png";
+        //String fileName = "src/test/test_logs/screenshots/scr-" + currentDate + ".png";
+        String fileName = "build/screenshots/scr-" + currentDate + ".png";
         return fileName;
     }
 }
