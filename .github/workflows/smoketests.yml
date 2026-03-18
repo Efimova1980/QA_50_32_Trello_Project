@@ -29,3 +29,10 @@ jobs:
 
    - name: Build with Gradle Wrapper
      run: .\gradlew clean smoketests
+
+   - name: Upload screenshots
+     if: always()
+     uses: actions/upload-artifact@v4
+     with:
+       name: screenshots
+       path: build/screenshots/
