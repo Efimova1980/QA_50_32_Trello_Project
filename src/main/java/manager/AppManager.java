@@ -18,8 +18,11 @@ public class AppManager {
     public Logger logger = LoggerFactory.getLogger(AppManager.class);
     private WebDriver driver;
 
-    public WebDriver getDriver() {return driver;}
-    public AppManager() {}
+    public WebDriver getDriver() {
+        return driver;
+    }
+    public AppManager()
+    {}
 
     @BeforeMethod(alwaysRun = true)
     public void setup(Method method){
@@ -30,7 +33,7 @@ public class AppManager {
 //        prefs.put("intl.accept_languages", "en-US,en");
 //        chromeOptions.setExperimentalOption("prefs", prefs);
 
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         WebDriverListener webDriverListener = new WDListener();
