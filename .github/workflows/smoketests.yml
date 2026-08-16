@@ -20,6 +20,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Sync clock
+        run: w32tm /resync /force
+        shell: powershell
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
