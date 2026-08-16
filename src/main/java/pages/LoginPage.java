@@ -49,7 +49,9 @@ public class LoginPage extends BasePage {
         submitEmail(user.getEmail());
         submitPassword(user.getPassword());
         submitTopSecret(user.getTotpSecret());
-        validateURL("boards");
+        if (!validateURL("boards")) {
+            logger.warn("Did not land on boards page within timeout after login");
+        }
     }
 
     public void submitTopSecret(String topSecret){
