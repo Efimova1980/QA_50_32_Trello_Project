@@ -26,14 +26,14 @@ public class MyBoardPage extends BasePage{
     WebElement btnDeleteBoardConfirm;
 
     public void deleteBoard(){
-        clickWait(btnDots, 5);
+        clickWait(btnDots, 10);
         scrollTo(btnCloseBoard);
-        clickWait(btnCloseBoard, 5);
-        clickWait(btnCloseBoardConfirm, 5);
-        clickWait(btnDots, 5);
+        clickWait(btnCloseBoard, 10);
+        clickWait(btnCloseBoardConfirm, 10);
+        clickWait(btnDots, 10);
         scrollTo(btnPermanentlyDeleteBoard);
-        clickWait(btnPermanentlyDeleteBoard, 5);
-        clickWait(btnDeleteBoardConfirm, 5);
+        clickWait(btnPermanentlyDeleteBoard, 10);
+        clickWait(btnDeleteBoardConfirm, 10);
     }
 
     public boolean validateBoardName(String text, int time){

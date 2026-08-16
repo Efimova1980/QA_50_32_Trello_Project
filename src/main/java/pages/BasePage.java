@@ -28,7 +28,7 @@ public class BasePage {
         // by a re-render before the click command reaches the browser (e.g. after closing a board)
         for (int attempt = 1; ; attempt++) {
             try {
-                new WebDriverWait(driver, Duration.ofSeconds(10))
+                new WebDriverWait(driver, Duration.ofSeconds(time))
                         .until(ExpectedConditions.elementToBeClickable(webElement)).click();
                 return;
             } catch (StaleElementReferenceException e) {

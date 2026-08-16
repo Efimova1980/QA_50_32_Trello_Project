@@ -32,17 +32,17 @@ public class BoardsPage extends BasePage{
     WebElement btnManageAccountLink;
 
     public MyBoardPage createNewBoard(Board board){
-        clickWait(btnCreateNewBoard, 5);
-        clickWait(btnCreateBoardMenuItem, 5);
+        clickWait(btnCreateNewBoard, 10);
+        clickWait(btnCreateBoardMenuItem, 10);
         inputBoardTitle.sendKeys(board.getBoardTitle());
-        clickWait(btnCreateNewBoardSubmit, 5);
+        clickWait(btnCreateNewBoardSubmit, 10);
         validateURL("/b/");
         return new MyBoardPage(driver);
     }
 
     public void openMyAccount(){
-        clickWait(btnAccaunt, 5);
-        clickWait(btnManageAccountLink,5);
+        clickWait(btnAccaunt, 10);
+        clickWait(btnManageAccountLink,10);
     }
 
     public boolean validateBoardNotPresent(String boardTitle, int time){

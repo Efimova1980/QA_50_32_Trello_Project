@@ -61,7 +61,7 @@ public class LoginPage extends BasePage {
     }
 
     public void submitPassword(String password){
-        clickWait(inputPassword, 5);
+        clickWait(inputPassword, 10);
         inputPassword.sendKeys(password);
         loginSubmit.click();
     }

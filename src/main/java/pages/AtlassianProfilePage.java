@@ -31,10 +31,10 @@ public class AtlassianProfilePage extends BasePage{
     public void changeMyProfilePhoto(String photoPath){
         Actions actions = new Actions(driver);
         actions.moveToElement(btnProfilePhoto).pause(2000).click().perform();
-        clickWait(btnChangeAvatar, 5);
+        clickWait(btnChangeAvatar, 10);
         File photo = new File(photoPath);
         inputUploadPhoto.sendKeys(photo.getAbsolutePath());
-        clickWait(btnUploadPhoto, 5);
+        clickWait(btnUploadPhoto, 10);
     }
 
     public boolean validateMessage(String text){
