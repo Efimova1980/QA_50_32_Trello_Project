@@ -1,4 +1,4 @@
-name: all_tests
+name: test
 
 env:
   TRELLO_EMAIL: ${{ secrets.TRELLO_EMAIL }}
