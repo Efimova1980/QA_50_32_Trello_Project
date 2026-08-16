@@ -96,6 +96,7 @@ public class LoginPage extends BasePage {
 
         TOTPSecret secret = TOTPSecret.Companion.fromBase32EncodedString(totpSecret);
         TOTP totp = new TOTPGenerator().generateCurrent(secret);
+        logger.info("TOTP secret length: {}", totpSecret.length());
         inputTotpCode.sendKeys(totp.getValue());
         totpSubmit.click();
     }
