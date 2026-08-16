@@ -49,6 +49,7 @@ public class LoginPage extends BasePage {
         submitEmail(user.getEmail());
         submitPassword(user.getPassword());
         submitTopSecret(user.getTotpSecret());
+        validateURL("boards");
     }
 
     public void submitTopSecret(String topSecret){
@@ -79,19 +80,6 @@ public class LoginPage extends BasePage {
     public boolean validateIncorrectTotpError(int time) {
         return validateElementVisible(errorWarning, time);
     }
-
-//    private void enterTotpCode(String totpSecret) {
-//        try {
-//            new WebDriverWait(driver, Duration.ofSeconds(10))
-//                    .until(ExpectedConditions.visibilityOf(inputTotpCode));
-//        } catch (TimeoutException e) {
-//            return;
-//        }
-//        TOTPSecret secret = TOTPSecret.Companion.fromBase32EncodedString(totpSecret);
-//        TOTP totp = new TOTPGenerator().generateCurrent(secret);
-//        inputTotpCode.sendKeys(totp.getValue());
-//        totpSubmit.click();
-//    }
 
     private void enterTotpCode(String totpSecret) {
         try {

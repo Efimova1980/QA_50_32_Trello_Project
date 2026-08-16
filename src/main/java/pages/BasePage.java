@@ -58,7 +58,7 @@ public class BasePage {
 
     public boolean validateTextInElementWait(WebElement element, String text, int time){
         try {
-            return new WebDriverWait(driver, Duration.ofSeconds(5))
+            return new WebDriverWait(driver, Duration.ofSeconds(time))
                     .until(ExpectedConditions.textToBePresentInElement(element, text));
         }catch (NoSuchElementException| TimeoutException exception){
             System.out.println("create exception" + exception.getMessage());
