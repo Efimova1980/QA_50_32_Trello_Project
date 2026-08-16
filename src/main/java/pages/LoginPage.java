@@ -83,6 +83,37 @@ public class LoginPage extends BasePage {
         return validateElementVisible(errorWarning, time);
     }
 
+//    private void enterTotpCode(String totpSecret) {
+//        try {
+//            new WebDriverWait(driver, Duration.ofSeconds(10))
+//                    .until(ExpectedConditions.visibilityOf(inputTotpCode));
+//        } catch (TimeoutException e) {
+//            logger.warn("TOTP input field did not appear within 10s - assuming 2FA was not requested", e);
+//            return;
+//        }
+//
+//        waitForFreshTotpWindow();
+//
+//        TOTPSecret secret = TOTPSecret.Companion.fromBase32EncodedString(totpSecret);
+//        TOTP totp = new TOTPGenerator().generateCurrent(secret);
+//        logger.info("TOTP secret length: {}", totpSecret.length());
+//        inputTotpCode.sendKeys(totp.getValue());
+//        totpSubmit.click();
+//    }
+//
+//    // A TOTP code is valid for a 30-second window. If we generate it near the end of that
+//    // window, network/browser latency (more noticeable on CI runners) can make it arrive
+//    // after the window has already rolled over, so the server rejects a code that was
+//    // technically correct when generated. Waiting for a fresh window avoids that race.
+//    private void waitForFreshTotpWindow() {
+//        long secondsIntoWindow = (System.currentTimeMillis() / 1000) % 30;
+//        long secondsLeft = 30 - secondsIntoWindow;
+//        if (secondsLeft < 5) {
+//            logger.info("Only {}s left in current TOTP window, waiting for a fresh one", secondsLeft);
+//            pause((int) secondsLeft);
+//        }
+//    }
+
     private void enterTotpCode(String totpSecret) {
         try {
             new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -101,16 +132,20 @@ public class LoginPage extends BasePage {
         totpSubmit.click();
     }
 
-    // A TOTP code is valid for a 30-second window. If we generate it near the end of that
-    // window, network/browser latency (more noticeable on CI runners) can make it arrive
-    // after the window has already rolled over, so the server rejects a code that was
-    // technically correct when generated. Waiting for a fresh window avoids that race.
     private void waitForFreshTotpWindow() {
-        long secondsIntoWindow = (System.currentTimeMillis() / 1000) % 30;
+        long currentTimeMillis = System.currentTimeMillis();
+        long secondsIntoWindow = (currentTimeMillis / 1000) % 30;
         long secondsLeft = 30 - secondsIntoWindow;
+
         if (secondsLeft < 5) {
-            logger.info("Only {}s left in current TOTP window, waiting for a fresh one", secondsLeft);
-            pause((int) secondsLeft);
+            long millisToWait = (secondsLeft * 1000) + 500;
+            logger.info("Only {}s left in current TOTP window, waiting for {}ms", secondsLeft, millisToWait);
+            try {
+                Thread.sleep(millisToWait);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                logger.error("TOTP window wait interrupted", e);
+            }
         }
     }
 }
