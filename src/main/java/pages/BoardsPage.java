@@ -41,7 +41,7 @@ public class BoardsPage extends BasePage{
     }
 
     public void openMyAccount(){
-        clickWait(btnAccaunt, 10);
+        clickWait(btnAccaunt, 20);
         clickWait(btnManageAccountLink,10);
     }
 
