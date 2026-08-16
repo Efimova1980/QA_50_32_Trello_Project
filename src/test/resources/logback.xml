@@ -13,7 +13,6 @@
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender"> <!--input to file-->
         <file>src/test/test_logs/log-${bySecond}.log</file>
-        <maxHistory>5</maxHistory>  <!-- keep log file 5 days -->
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>

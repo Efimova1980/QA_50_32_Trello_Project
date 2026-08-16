@@ -10,38 +10,48 @@ import org.testng.ITestResult;
 
 public class TestNGListener implements ITestListener {
     Logger logger = LoggerFactory.getLogger(TestNGListener.class);
-    private WebDriver driver;
 
     @Override
     public void onTestStart(ITestResult result) {
-        ITestListener.super.onTestStart(result);
-        logger.info(result.getTestClass() + " start testing -->" + result.getName());
+        logger.info("START {}#{}", testClassName(result), result.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        ITestListener.super.onTestSuccess(result);
-        logger.info(result.getTestClass() + " test success -->" + result.getName());
+        logger.info("PASS  {}#{} in {} ms", testClassName(result), result.getName(), duration(result));
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        ITestListener.super.onTestSkipped(result);
-        logger.info(result.getTestClass() + " test skipped -->" + result.getName());
+        logger.warn("SKIP  {}#{} in {} ms{}", testClassName(result), result.getName(), duration(result), reasonSuffix(result));
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        ITestListener.super.onTestFailure(result);
-        logger.info(result.getTestClass() + " test failed-->" + result.getName());
-        logger.error("Error");
-        this.driver = ((AppManager)result.getInstance()).getDriver();
-        TakeScreenShot.takeScreenShot((TakesScreenshot)driver);
+        logger.error("FAIL  {}#{} in {} ms{}", testClassName(result), result.getName(), duration(result), reasonSuffix(result));
+        WebDriver driver = ((AppManager) result.getInstance()).getDriver();
+        TakeScreenShot.takeScreenShot((TakesScreenshot) driver);
     }
 
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
-        ITestListener.super.onTestFailedWithTimeout(result);
-        logger.info("Test failed with timeout " + result.getName());
+        logger.error("TIMEOUT {}#{} in {} ms{}", testClassName(result), result.getName(), duration(result), reasonSuffix(result));
+    }
+
+    private String testClassName(ITestResult result) {
+        return result.getTestClass().getRealClass().getSimpleName();
+    }
+
+    private long duration(ITestResult result) {
+        return result.getEndMillis() - result.getStartMillis();
+    }
+
+    // appends " - ExceptionType: message" when the result carries a failure cause, e.g. skip due to a failed dependency
+    private String reasonSuffix(ITestResult result) {
+        Throwable throwable = result.getThrowable();
+        if (throwable == null) {
+            return "";
+        }
+        return " - " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage();
     }
 }

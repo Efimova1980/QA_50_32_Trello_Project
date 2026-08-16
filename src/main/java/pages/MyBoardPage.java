@@ -12,35 +12,31 @@ public class MyBoardPage extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
-    @FindBy(xpath = "//input[@data-testid='board-name-input']")
+    @FindBy(xpath = "//*[@data-testid='board-name-display']")
     WebElement boardName;
-    @FindBy(xpath = "//span[@data-testid='OverflowMenuHorizontalIcon']")
+    @FindBy(xpath = "//button[@aria-label='Show menu']")
     WebElement btnDots;
-    @FindBy(xpath = "//ul/li[last()]/button")
+    @FindBy(xpath = "//div[text()='Close board']")
     WebElement btnCloseBoard;
     @FindBy(xpath = "//button[@data-testid='popover-close-board-confirm']")
     WebElement btnCloseBoardConfirm;
-    //@FindBy(xpath ="//button[@data-testid='close-board-delete-board-button']")
-    @FindBy(xpath = "//ul/li[last()]/button")
-    WebElement btnDeleteBoard;
+    @FindBy(xpath = "//button[@data-testid='close-board-delete-board-button']")
+    WebElement btnPermanentlyDeleteBoard;
     @FindBy(xpath = "//button[@data-testid='close-board-delete-board-confirm-button']" )
     WebElement btnDeleteBoardConfirm;
 
     public void deleteBoard(){
-        btnDots.click();
-        btnCloseBoard.click();
-        btnCloseBoardConfirm.click();
-        //clickWait(btnDots, 5);
-        //driver.navigate().refresh();
-        pause(3);
-        btnDots.click();
-        pause(3);
-        btnDeleteBoard.click();
-        btnDeleteBoardConfirm.click();
+        clickWait(btnDots, 5);
+        scrollTo(btnCloseBoard);
+        clickWait(btnCloseBoard, 5);
+        clickWait(btnCloseBoardConfirm, 5);
+        clickWait(btnDots, 5);
+        scrollTo(btnPermanentlyDeleteBoard);
+        clickWait(btnPermanentlyDeleteBoard, 5);
+        clickWait(btnDeleteBoardConfirm, 5);
     }
 
-
     public boolean validateBoardName(String text, int time){
-        return validateTextInElementWait(boardName,text,time);
+        return validateTextInElementWait(boardName, text, time);
     }
 }

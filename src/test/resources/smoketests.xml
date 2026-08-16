@@ -9,8 +9,7 @@
         <classes>
             <class name="tests.LoginTest"/>
             <class name="tests.BoardTests"/>
-            <class name="tests.ChangeProfilePhoto"/>
-            <class name="tests.DeleteBoardTests"/>
+            <class name="tests.ChangeProfilePhotoTests"/>
         </classes>
     </test>
 </suite>

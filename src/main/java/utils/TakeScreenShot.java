@@ -34,8 +34,6 @@ public class TakeScreenShot {
         System.out.println(date);
         String currentDate = formater.format(date);
         System.out.println(currentDate);
-        //String fileName = "src/test/test_logs/screenshots/scr-" + currentDate + ".png";
-        String fileName = "build/screenshots/scr-" + currentDate + ".png";
-        return fileName;
+        return "build/screenshots/scr-" + currentDate + ".png";
     }
 }

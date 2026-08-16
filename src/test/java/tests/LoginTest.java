@@ -3,6 +3,7 @@ package tests;
 import dto.User;
 import manager.AppManager;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.BoardsPage;
@@ -14,17 +15,37 @@ import utils.TestNGListener;
 
 public class LoginTest extends AppManager {
 
+    LoginPage loginPage;
+
+    @BeforeMethod(alwaysRun = true)
+    public void goToLoginPage() {
+        loginPage =  new HomePage(getDriver()).clickBtnLogin();
+    }
+
     @Test(groups = "smoke")
     public void loginPositiveTest(){
-        User user = User.builder()
-                .email("efimovaqa2025@gmail.com")
-                .password("ae8nrw2a")
-                .build();
+        loginPage.login(User.getValidUser());
+        Assert.assertTrue(new BoardsPage(getDriver())
+                .validateURL("boards"));
+    }
 
-        logger.info("login test with user: " + user.getEmail() + " " + user.getPassword());
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
-        new LoginPage(getDriver()).login(user);
-        Assert.assertTrue(new BoardsPage(getDriver()).validateURL("boards"));
+    @Test
+    public void loginNegativeTest_WrongEmail(){
+        loginPage.submitEmail(User.getUserWithWrongEmail().getEmail());
+        Assert.assertTrue(loginPage.validateIncorrectEmailError(5));
+    }
+
+    @Test
+    public void loginNegativeTest_WrongPassword(){
+        User user = User.getUserWithWrongPassword();
+        loginPage.submitEmail(user.getEmail());
+        loginPage.submitPassword(user.getPassword());
+        Assert.assertTrue(loginPage.validateIncorrectPasswordError(5));
+    }
+
+    @Test
+    public void loginNegativeTest_WrongTopSecret(){
+        loginPage.login(User.getUserWithWrongTopSecret());
+        Assert.assertTrue(loginPage.validateIncorrectTotpError(5));
     }
 }

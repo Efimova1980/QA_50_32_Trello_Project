@@ -21,7 +21,7 @@ public class AtlassianProfilePage extends BasePage{
     WebElement btnChangeAvatar;
     @FindBy(xpath = "//input[@data-testid='image-navigator-input-file']")
     WebElement inputUploadPhoto;
-    @FindBy(xpath = "//button[@class='css-u9eekp']")
+    @FindBy(xpath = "//button/span[text()='Upload']")
     WebElement btnUploadPhoto;
     @FindBy(xpath = "//div[@class = '_11c8fhey _1reo1wug _18m91wug _c71l53f4 _1i4qfg65']")
     WebElement popupMessage;

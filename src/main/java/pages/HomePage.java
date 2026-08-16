@@ -13,13 +13,11 @@ public class HomePage extends BasePage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
-
     @FindBy(xpath = "//a[@data-uuid='MJFtCCgVhXrVl7v9HA7EH_login']")
     WebElement btnLogin;
 
-
-
-    public void clickBtnLogin(){
+    public LoginPage clickBtnLogin(){
         btnLogin.click();
+        return new LoginPage(driver);
     }
 }

@@ -1,11 +1,16 @@
 package pages;
 
 import dto.Board;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BoardsPage extends BasePage{
     public BoardsPage(WebDriver driver) {
@@ -15,19 +20,24 @@ public class BoardsPage extends BasePage{
 
     @FindBy(xpath = "//button[@data-testid='create-board-tile']")
     WebElement btnCreateNewBoard;
+    @FindBy(xpath = "//button[@data-testid='create-board-button']")
+    WebElement btnCreateBoardMenuItem;
     @FindBy(xpath = "//input[@data-testid='create-board-title-input']")
     WebElement inputBoardTitle;
     @FindBy(xpath = "//button[@data-testid='create-board-submit-button']")
     WebElement btnCreateNewBoardSubmit;
-    @FindBy(xpath = "//span[@title='Olga Efimova (efimovaqa2025)']")
+    @FindBy(xpath = "//button[@data-testid='header-member-menu-button']")
     WebElement btnAccaunt;
-    @FindBy(xpath = "//a[@data-testid='manage-account-link']")
+    @FindBy(xpath = "//span[text()='Manage account']")
     WebElement btnManageAccountLink;
 
-    public void createNewBoard(Board board){
-        btnCreateNewBoard.click();
+    public MyBoardPage createNewBoard(Board board){
+        clickWait(btnCreateNewBoard, 5);
+        clickWait(btnCreateBoardMenuItem, 5);
         inputBoardTitle.sendKeys(board.getBoardTitle());
         clickWait(btnCreateNewBoardSubmit, 5);
+        validateURL("/b/");
+        return new MyBoardPage(driver);
     }
 
     public void openMyAccount(){
@@ -35,5 +45,17 @@ public class BoardsPage extends BasePage{
         clickWait(btnManageAccountLink,5);
     }
 
+    public boolean validateBoardNotPresent(String boardTitle, int time){
+        return new WebDriverWait(driver, Duration.ofSeconds(time))
+                .until(ExpectedConditions
+                        .invisibilityOfElementLocated(By.xpath("//a[normalize-space(text())='" + boardTitle + "']")));
+    }
+
+    public void openBoard(String boardTitle){
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions
+                        .elementToBeClickable(By.xpath("//a[normalize-space(text())='" + boardTitle + "']")))
+                .click();
+    }
 
 }
