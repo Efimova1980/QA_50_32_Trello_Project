@@ -1,4 +1,4 @@
-name: test
+name: Login tests
 
 env:
   TRELLO_EMAIL: ${{ secrets.TRELLO_EMAIL }}
@@ -42,22 +42,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle Wrapper
-        run: .\gradlew clean test
-
-      - name: Verify tests actually ran
-        if: always()
-        shell: powershell
-        run: |
-          $files = Get-ChildItem -Path build/test-results/test -Filter "TEST-*.xml" -ErrorAction SilentlyContinue
-          Write-Host "Test result files found: $($files.Count)"
-          $files | ForEach-Object { Write-Host $_.Name }
+        run: .\gradlew clean logintests
 
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: build/reports/tests/test/
+          path: build/reports/tests/logintests/
 
       - name: Upload screenshots
         if: always()

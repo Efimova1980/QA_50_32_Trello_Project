@@ -44,3 +44,11 @@ tasks.register('smoketests', Test) {
         suites 'src/test/resources/smoketests.xml'
     }
 }
+
+tasks.register('logintests', Test) {
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    useTestNG(){
+        suites 'src/test/resources/logintests.xml'
+    }
+}
