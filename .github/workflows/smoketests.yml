@@ -25,7 +25,7 @@ jobs:
         run: |
           Set-Service -Name w32time -StartupType Automatic
           Start-Service -Name w32time -ErrorAction SilentlyContinue
-          w32tm /config /manualpeerlist:"://google.com,0x8" /syncfromflags:manual /update
+          w32tm /config /manualpeerlist:"time.google.com,0x8" /syncfromflags:manual /update
           Restart-Service -Name w32time
           w32tm /resync /force
 
