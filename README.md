@@ -44,7 +44,7 @@ The test account is protected by two-factor authentication (2FA). Logging in req
 
 Locally these are set as environment/IDE run-configuration variables. In CI they're stored as GitHub Secrets (`Settings → Secrets and variables → Actions`) and passed into the workflow via the `env` block.
 
-⚠️ **Note:** every test that logs in performs a full sign-in, including entering a TOTP code. Trello/Atlassian rate-limits repeated login attempts from the same source — running many logins in a short time (e.g. a full test suite, or frequent repeated workflow runs) can cause the TOTP code to be rejected regardless of whether it's correct. Because of this, the CI setup runs only a dedicated, narrow login workflow rather than triggering a full login on every test.
+⚠️ **Note:** every test that logs in performs a full sign-in, including entering a TOTP code. Trello/Atlassian rate-limits repeated login attempts from the same source — running many logins in a short time (e.g. a full test suite, or frequent repeated workflow runs) can cause the TOTP code to be rejected regardless of whether it's correct. Because of this, only one test is launched for demonstration purposes—a positive registration test.
 
 ## Running tests
 
@@ -53,7 +53,7 @@ Locally these are set as environment/IDE run-configuration variables. In CI they
 ```
 ./gradlew clean test          # full test suite
 ./gradlew clean smoketests    # smoke tests only (one scenario per class)
-./gradlew clean logintests    # login tests only (LoginTest)
+./gradlew clean logintests    # login tests only (one scenario)
 ```
 
 On Windows, use `.\gradlew` instead of `./gradlew`.

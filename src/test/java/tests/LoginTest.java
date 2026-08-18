@@ -29,13 +29,13 @@ public class LoginTest extends AppManager {
                 .validateURL("boards"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void loginNegativeTest_WrongEmail(){
         loginPage.submitEmail(User.getUserWithWrongEmail().getEmail());
         Assert.assertTrue(loginPage.validateIncorrectEmailError(5));
     }
 
-    @Test
+    @Test(enabled = false)
     public void loginNegativeTest_WrongPassword(){
         User user = User.getUserWithWrongPassword();
         loginPage.submitEmail(user.getEmail());
@@ -43,7 +43,7 @@ public class LoginTest extends AppManager {
         Assert.assertTrue(loginPage.validateIncorrectPasswordError(5));
     }
 
-    @Test
+    @Test(enabled = false)
     public void loginNegativeTest_WrongTopSecret(){
         loginPage.login(User.getUserWithWrongTopSecret());
         Assert.assertTrue(loginPage.validateIncorrectTotpError(5));

@@ -42,7 +42,9 @@ public class AppManager {
     }
 
     public void loginTrello(){
-        new HomePage(getDriver()).clickBtnLogin().login(User.getValidUser());
+        new HomePage(getDriver())
+                .clickBtnLogin()
+                .login(User.getValidUser());
     }
 
     @AfterMethod(alwaysRun = true, enabled = true)
